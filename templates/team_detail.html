@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ team.name }}</title>
+</head>
+<body>
+    <h1>{{ team.name }}</h1>
+    <p>Balance: {{ team.balance }}</p>
+
+    <h2>Players</h2>
+    <ul>
+        {% for player in team.players %}
+        <li>{{ player.name }} - Salary: {{ player.salary }} 
+            <a href="{{ url_for('delete_player', player_id=player.id) }}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add a Player</h2>
+    <form action="{{ url_for('add_player', team_id=team.id) }}" method="POST">
+        <input type="text" name="player_name" placeholder="Player Name" required>
+        <input type="number" name="player_salary" placeholder="Player Salary" step="0.01" required>
+        <button type="submit">Add Player</button>
+    </form>
+
+    <h2>Update Balance</h2>
+    <form action="{{ url_for('update_balance', team_id=team.id) }}" method="POST">
+        <input type="number" name="amount" placeholder="Amount" step="0.01" required>
+        <select name="operation">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+        <button type="submit">Update</button>
+    </form>
+
+    <a href="/">Back to Teams</a>
+</body>
+</html>

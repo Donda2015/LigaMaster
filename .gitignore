@@ -1,0 +1,26 @@
+# Bases de datos locales
+*.db
+
+# Migraciones
+migrations/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Configuraciones de entornos virtuales
+venv/
+.env
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Configuración de herramientas de desarrollo
+.vscode/
+.idea/

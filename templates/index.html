@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Equipos{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Gestión de Equipos</h1>
+
+<!-- Formulario para agregar un equipo manualmente -->
+<form action="/agregar_equipo" method="POST" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="nombre_equipo" class="form-control" placeholder="Nombre del Equipo" required>
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="nombre_dt" class="form-control" placeholder="Nombre del DT" required>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">Agregar Equipo</button>
+        </div>
+    </div>
+</form>
+
+<!-- Formulario para cargar datos de un equipo desde un Excel -->
+<form action="/subir_equipo" method="POST" enctype="multipart/form-data" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="nombre_equipo" class="form-control" placeholder="Nombre del Equipo" required>
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="nombre_dt" class="form-control" placeholder="Nombre del DT" required>
+        </div>
+        <div class="col-md-4">
+            <input type="file" name="archivo_excel" class="form-control" accept=".xlsx" required>
+        </div>
+        <div class="col-md-4 mt-2">
+            <button type="submit" class="btn btn-success w-100">Subir desde Excel</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>DT</th>
+            <th>Balance</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipo in equipos %}
+        <tr>
+            <td>{{ equipo.nombre }}</td>
+            <td>{{ equipo.dt }}</td>
+            <td>{{ equipo.balance }}</td>
+            <td>
+                <a href="/equipo/{{ equipo.id }}" class="btn btn-info btn-sm">Ver Detalles</a>
+                <a href="/eliminar_equipo/{{ equipo.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

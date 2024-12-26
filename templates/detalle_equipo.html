@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Detalles de {{ equipo.nombre }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h1 class="card-title">{{ equipo.nombre }}</h1>
+        <p><strong>Director Técnico:</strong> {{ equipo.dt }}</p>
+        <p>
+            <strong>Balance ajustado:</strong> 
+            <span style="color: {% if balance_ajustado < 0 %}red{% else %}blue{% endif %};">
+                ${{ balance_ajustado }}
+            </span>
+        </p>
+    </div>
+</div>
+
+<h2 class="mt-4">Jugadores</h2>
+<form action="/agregar_jugador/{{ equipo.id }}" method="POST" class="mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" name="nombre_jugador" class="form-control" placeholder="Nombre del Jugador" required>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="salario_jugador" class="form-control" placeholder="Salario" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="posicion_jugador" class="form-control" placeholder="Posición" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="nacionalidad" class="form-control" placeholder="Nacionalidad" required>
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="edad" class="form-control" placeholder="Edad" required>
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="media" class="form-control" placeholder="Media" required>
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="temporadas" class="form-control" placeholder="Temporadas" required>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">Agregar</button>
+        </div>
+    </div>
+</form>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Posición</th>
+            <th>Nacionalidad</th>
+            <th>Edad</th>
+            <th>Media</th>
+            <th>Temporadas</th>
+            <th>Salario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for jugador in equipo.jugadores %}
+        <tr>
+            <td>{{ jugador.nombre }}</td>
+            <td>{{ jugador.posicion }}</td>
+            <td>{{ jugador.nacionalidad }}</td>
+            <td>{{ jugador.edad }}</td>
+            <td>{{ jugador.media }}</td>
+            <td>{{ jugador.temporadas }}</td>
+            <td>{{ jugador.salario }}</td>
+            <td>
+                <a href="/eliminar_jugador/{{ jugador.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2 class="mt-4">Resumen Financiero</h2>
+<p><strong>Suma de sueldos:</strong> ${{ suma_salarios }}</p>
+<p>
+    <strong>Balance ajustado:</strong> 
+    <span style="color: {% if balance_ajustado < 0 %}red{% else %}blue{% endif %};">
+        ${{ balance_ajustado }}
+    </span>
+</p>
+
+<h2 class="mt-4">Movimientos Financieros</h2>
+<form action="/actualizar_balance/{{ equipo.id }}" method="POST" class="mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <input type="number" name="monto" class="form-control" placeholder="Monto" required>
+        </div>
+        <div class="col-md-5">
+            <input type="text" name="motivo" class="form-control" placeholder="Motivo" required>
+        </div>
+        <div class="col-md-2">
+            <select name="operacion" class="form-control" required>
+                <option value="ingreso">Ingreso</option>
+                <option value="egreso">Egreso</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+        </div>
+    </div>
+</form>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Monto</th>
+            <th>Motivo</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movimiento in equipo.movimientos %}
+        <tr>
+            <td>{{ movimiento.monto }}</td>
+            <td>{{ movimiento.motivo }}</td>
+            <td>{{ movimiento.tipo }}</td>
+            <td>
+                <a href="/eliminar_movimiento/{{ movimiento.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/resetear_balance/{{ equipo.id }}" class="btn btn-warning mt-3">Resetear Balance</a>
+<a href="/" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}
