@@ -208,5 +208,8 @@ def eliminar_movimiento(id):
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
+        # Ejecuta migraciones automáticamente
+        from flask_migrate import upgrade
+        upgrade()
+
     app.run(debug=True)
