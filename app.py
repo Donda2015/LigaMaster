@@ -213,3 +213,11 @@ if __name__ == "__main__":
         upgrade()
 
     app.run(debug=True)
+
+if __name__ == "__main__":
+    with app.app_context():
+        # Crea las tablas automáticamente si no existen
+        db.create_all()
+
+    # Inicia la aplicación
+    app.run(debug=True)
