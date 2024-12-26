@@ -7,6 +7,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 app = Flask(__name__)
+
+# Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///tu_base_de_datos.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -208,16 +210,7 @@ def eliminar_movimiento(id):
 
 if __name__ == "__main__":
     with app.app_context():
-        # Ejecuta migraciones automáticamente
-        from flask_migrate import upgrade
-        upgrade()
-
-    app.run(debug=True)
-
-if __name__ == "__main__":
-    with app.app_context():
         # Crea las tablas automáticamente si no existen
         db.create_all()
 
-    # Inicia la aplicación
     app.run(debug=True)
