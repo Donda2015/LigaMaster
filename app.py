@@ -214,3 +214,9 @@ if __name__ == "__main__":
         db.create_all()
 
     app.run(debug=True)
+
+    with app.app_context():
+        # Crea las tablas automáticamente si no existen
+        db.create_all()
+
+    app.run(debug=True)
