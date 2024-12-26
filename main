@@ -1,0 +1,6 @@
+git init
+git add .
+git commit -m "Prepare project for Render deployment"
+git branch -M main
+git remote add origin <URL-de-tu-repo>
+git push -u origin main
